@@ -13,37 +13,16 @@
 
 <body>
 
-  <header>
-    <div class="">
-      Logo
-    </div>
-    <div class="">
-      navigation
-    </div>
-  </header>
-
   <main>
     <section>
-      <form class="" onsubmit="return Client.handleSubmit(event)">
-        <input id="name" type="url" name="url" id="url" pattern="https://.*" placeholder="https://example.com" required>
-        <input type="submit" name="" value="submit" onclick="return Client.handleSubmit(event)" onsubmit="return Client.handleSubmit(event)">
+      <form class="" onsubmit="return">
+        <input type="text" placeholder="Enter City" id="location" name="location">
+        <input type="date" id="trip-start" name="trip-start" value="2020-01-01" min="2020-01-01" max="2030-12-31">
+        <input type="submit" name="" value="submit" id="generate">
       </form>
-    </section>
-
-    <section id="entry-wrapper" style="visibility: hidden;">
-      <h2>Form Results:</h2>
-        <p>Irony: <span id="irony"></span></p>
-        <p>Agreement:<span id="agreement"></span></p>
-        <p>Subjectivity: <span id="subjectivity"></span></p>
-        <p>Confidence: <span id="confidence"></span></p>
-        <p>Status: <span id="status"></span></p>
-
     </section>
   </main>
 
-  <footer>
-    <p>This is a footer</p>
-  </footer>
 
   <!-- <script>
       // Check that service workers are supported
@@ -55,4 +34,5 @@
       }
   </script> -->
 </body>
+
 </html>
