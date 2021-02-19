@@ -82,10 +82,12 @@ const dateCompare = async (geoLat, geoLng) => {
 
   let response;
   if (compareDate > 7) {
-    https://api.weatherbit.io/v2.0/history/daily?lat=38.123&lon=-78.543&start_date=2021-02-14&end_date=2021-02-15
-    response = await fetch(`${weatherHistoryAPIBase}?lat=${geoLng}&lon=${geoLng}&start_date=${tripDate}&end_date=${endDate}`)
+    //https:api.weatherbit.io/v2.0/history/daily?lat=38.123&lon=-78.543&start_date=2021-02-14&end_date=2021-02-15
+    console.log("Made it in the If Statement");
+    response = await fetch(`${weatherHistoryAPIBase}?lat=${geoLng}&lon=${geoLng}&start_date=${tripDate}&end_date=2021-02-30`)
   } else {
     //https://api.weatherbit.io/v2.0/current?lat=35.7796&lon=-78.6382&key=API_KEY&include=minutely
+    console.log("Made it in the Else statement");
     response = await fetch(`${weatherCurrentAPIBase}?lat=${geoLng}&lon=${geoLng}&key=${weatherAPIKey}&include=minutely`)
   }
 
