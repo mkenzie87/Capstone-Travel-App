@@ -11,8 +11,8 @@ const geoFetch = geoAPIBase + geoParams;
 //API Weatherbit Information
 //Example Link:
 //https://api.weatherbit.io/v2.0/current?lat=35.7796&lon=-78.6382&key=API_KEY&include=minutely
-const weatherCurrentAPIBase = "https://api.weatherbit.io/v2.0/current";
-const weatherHistoryAPIBase = "https://api.weatherbit.io/v2.0/current";
+const weatherCurrentAPIBase = "http://api.weatherbit.io/v2.0/current";
+const weatherHistoryAPIBase = "http://api.weatherbit.io/v2.0/history/daily";
 const weatherAPIKey = "e9828cd2c56e45fcaefec003e2efc322"
 
 
@@ -20,22 +20,16 @@ const weatherAPIKey = "e9828cd2c56e45fcaefec003e2efc322"
 function handleSubmit(event) {
     event.preventDefault()
 
-
-
-    console.log(geoFetch); // logging fetch Url
-    console.log(tripDate); // logging date test
-
     getLocationData(geoFetch) // this will trigger the getLocationData function
-      // New Syntax!
+
       .then(function(data) {
           const geoLat = data.geonames[0].lat; // storing location latitude
           const geoLng = data.geonames[0].lng; // storing location longitute
 
-          console.log(geoLat + " Lat Data") // logging out location latitue
-          console.log(geoLng + " Lng Data") // logging out location longitute
-
         // Add data
         console.log(data);
+         dateCompare(geoLat, geoLng);
+        //console.log(dateCompare);
 
       })
 
@@ -63,29 +57,36 @@ const getLocationData = async (geoFetch) => {
 
 
 
-const dateCompare = async (long, lat) => {
+const dateCompare = async (geoLat, geoLng) => {
 
-  const tripDate = document.getElementById('trip-start').value;
+  const tripDate = document.getElementById('trip-start').value; // Set Date for Trip
+  const setTripDate = new Date(tripDate); //Adding Set Date Normal Formatting
+
+// I am having an issue with this if i wrap it in a setDate() comes back with a long string of numbers
+  // const endDate = setTripDate.getDate() + 1;
+
+
   // Current Data Variables
   const date = new Date(); // gets Current Date
   const day = date.getDate(); // gets current day
   const month = date.getMonth() + 1; // gets current month need to add 1 because it starts with 0
   const year = date.getFullYear(); // get current month
-  const currentFullDate = parseInt(`${year},${month},${day}`); // Full Current Date
-  const currentUTC = Date.UTC(currentFullDate);
 
-  //Selected Trip Date
-  const selectedDate = parseInt(tripDate); // Selected Trip Date
-  const selectedUTC = Date.UTC(selectedDate);
-
+  // Discard the time and time-zone information.
+  const setTripUTC = Date.UTC(setTripDate.getFullYear(), setTripDate.getMonth(), setTripDate.getDate());
+  const currentUTC = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
   // Comparing Days
   const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-  const compareDate =  Math.abs((selectedUTC - currentUTC) / _MS_PER_DAY);
+  const compareDate =  Math.floor((currentUTC - setTripUTC) / _MS_PER_DAY);
 
-  if (compareDate < 16) {
-    response = await fetch()
+
+  let response;
+  if (compareDate > 7) {
+    https://api.weatherbit.io/v2.0/history/daily?lat=38.123&lon=-78.543&start_date=2021-02-14&end_date=2021-02-15
+    response = await fetch(`${weatherHistoryAPIBase}?lat=${geoLng}&lon=${geoLng}&start_date=${tripDate}&end_date=${endDate}`)
   } else {
-    response = await fetch()
+    //https://api.weatherbit.io/v2.0/current?lat=35.7796&lon=-78.6382&key=API_KEY&include=minutely
+    response = await fetch(`${weatherCurrentAPIBase}?lat=${geoLng}&lon=${geoLng}&key=${weatherAPIKey}&include=minutely`)
   }
 
   try {
