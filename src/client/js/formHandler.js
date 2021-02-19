@@ -1,6 +1,5 @@
 //Get Input Fields
 const getLocation = document.getElementById('location').value;
-const tripDate = document.getElementById('trip-start').value;
 
 //API GEO Information
 const geoAPIBase = "http://api.geonames.org/searchJSON";
@@ -12,13 +11,16 @@ const geoFetch = geoAPIBase + geoParams;
 //API Weatherbit Information
 //Example Link:
 //https://api.weatherbit.io/v2.0/current?lat=35.7796&lon=-78.6382&key=API_KEY&include=minutely
-const weatherAPIBase = "https://api.weatherbit.io/v2.0/current";
+const weatherCurrentAPIBase = "https://api.weatherbit.io/v2.0/current";
+const weatherHistoryAPIBase = "https://api.weatherbit.io/v2.0/current";
 const weatherAPIKey = "e9828cd2c56e45fcaefec003e2efc322"
 
 
 
 function handleSubmit(event) {
     event.preventDefault()
+
+
 
     console.log(geoFetch); // logging fetch Url
     console.log(tripDate); // logging date test
@@ -36,6 +38,7 @@ function handleSubmit(event) {
         console.log(data);
 
       })
+
       .then(function(newData) {
 
         updateUI()
@@ -49,12 +52,10 @@ const getLocationData = async (geoFetch) => {
   try {
 
     const data = await res.json();
-    console.log("made it in function");
     console.log(data)
     return data;
   } catch (error) {
     console.log("error", error);
-    console.log("made it in error function");
     // appropriately handle the error
   }
 }
@@ -62,8 +63,9 @@ const getLocationData = async (geoFetch) => {
 
 
 
-function dateCompare (e) {
+const dateCompare = async (long, lat) => {
 
+  const tripDate = document.getElementById('trip-start').value;
   // Current Data Variables
   const date = new Date(); // gets Current Date
   const day = date.getDate(); // gets current day
@@ -80,8 +82,17 @@ function dateCompare (e) {
   const _MS_PER_DAY = 1000 * 60 * 60 * 24;
   const compareDate =  Math.abs((selectedUTC - currentUTC) / _MS_PER_DAY);
 
-  console.log(compareDate)
+  if (compareDate < 16) {
+    response = await fetch()
+  } else {
+    response = await fetch()
+  }
 
+  try {
+      return await response.json();
+  } catch (e) {
+      console.log('error', e)
+  }
 }
 
 
