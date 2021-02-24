@@ -1,0 +1,27 @@
+.location-wrapper {
+    background-position: center;
+    background-size: cover;
+    border-radius: 50px 0 0 50px;
+    margin: 50px 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.data-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 20px;
+    padding: 0 30px;
+    margin-bottom: -50px;
+}
+
+.weather-info.location-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #ffffffde;
+    padding: 50px 30px;
+    border-radius: 14px;
+
+}

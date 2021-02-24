@@ -1,12 +1,33 @@
-form {
-    border: 1px solid #545454;
-    border-radius: 3px;
-    padding: 40px;
-}
+// form {
+//     border: 1px solid #545454;
+//     border-radius: 3px;
+//     padding: 40px;
+// }
 
 input {
     padding: 5px 20px;
     width: 100%;
-    line-height: 16px;
-    margin: 10px 0;
+    line-height: 40px;
+    margin: 5px 0;
+    border: 1px solid #cecece;
+}
+
+#location-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 13% 0 6%;
+
+    h1 {
+      font-size: 60px;
+      margin-bottom: 30px;
+    }
+}
+
+#generate {
+    text-transform: uppercase;
+    background: #405f70;
+    border: 1px solid;
+    color: #fff;
+    display: inline-block;
 }
