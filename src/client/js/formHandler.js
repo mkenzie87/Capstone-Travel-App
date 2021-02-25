@@ -179,13 +179,18 @@ const updateUI = async () => {
   try {
     const allData = await request.json();
 
-    let locationBackground = `"url(${allData.webImage})"`;
+    let locationBackground = `'url(${allData.webImage})'`;
+    //let fullBackground = "document.getElementById('location-background').style.backgroundImage=";
+
 
     document.getElementById('city_field').innerHTML = allData.highTemp;
     document.getElementById('city_image').innerHTML = allData.lowTemp;
-    //document.getElementById('location-background').style.backgroundImage="url(images/img.jpg)";
-    document.getElementById('location-background').style.backgroundImage=locationBackground;
-    console.log(locationBackground);
+    //document.getElementById('location-background').style.backgroundImage="url(https://images.pexels.com/photos/1629236/pexels-photo-1629236.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260)";
+    //document.getElementById('location-background').style.backgroundImage='url(https://pixabay.com/get/g4cff499af31a3b8bb6e92d2d193a4cc652e124ff2814935916309e6073752634070a8342cddf202b6d83a8cbe0e4c5e2_640.jpg)'
+    //document.getElementById('location-background').style.backgroundImage=locationBackground;
+    document.getElementById('location-background').style.backgroundImage="url(" + allData.webImage + ")";
+
+    //console.log(fullBackground + locationBackground);
 
 
   } catch (error) {
