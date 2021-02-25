@@ -22,8 +22,8 @@ app.use(cors())
 app.use(express.static('dist'))
 
 // designates what port the app will listen to for incoming requests
-app.listen(8081, function() {
-  console.log('Example app listening on port 8081!')
+app.listen(8080, function() {
+  console.log('Travel app listening on port 8080!')
 })
 
 
@@ -39,12 +39,12 @@ function sendWeatherData(req, res) {
 };
 
 
-// POST Weather Data
-app.post('/addWeather', addWeather);
 
-function addWeather(req, res) {
-  projectData['web_image'] = req.body.web_image;
-  projectData['large_image'] = req.body.large_image;
+app.post('/postData',function (req,res){
+  projectData['highTemp'] = req.body.highTemp;
+  projectData['lowTemp'] = req.body.lowTemp;
+  projectData['webImage'] = req.body.webImage;
+  projectData['days'] = req.body.days;
 
   res.send(projectData);
-}
+});

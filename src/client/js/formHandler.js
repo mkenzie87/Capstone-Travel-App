@@ -1,4 +1,5 @@
-//Get Input Fields
+//Get API Data
+let allAPIData = {};
 
 //API GEO Information
 const geoAPIBase = "http://api.geonames.org/searchJSON";
@@ -30,6 +31,10 @@ function handleSubmit(event) {
           const geoLat = geoData.geonames[0].lat; // storing location latitude
           const geoLng = geoData.geonames[0].lng; // storing location longitute
 
+
+          allAPIData.geoLat = geoData.geonames[0].lat;
+          allAPIData.geoLng = geoData.geonames[0].lng;
+
           console.log("Latitude Data ", geoLat);
           console.log("Long Data ", geoLng);
 
@@ -44,14 +49,15 @@ function handleSubmit(event) {
         if (daysBetween <= 7) {
           //https://api.weatherbit.io/v2.0/current?lat=35.7796&lon=-78.6382&key=API_KEY&include=minutely
           console.log("Made it in the Current API", daysBetween);
-          weatherAPI = `${weatherCurrentAPIBase}?lat=${geoLat}&lon=${geoLng}&key=${weatherAPIKey}`;
+          weatherAPI = `${weatherCurrentAPIBase}?lat=${geoLat}&lon=${geoLng}&units=I&key=${weatherAPIKey}`;
           } else {
           //https:api.weatherbit.io/v2.0/history/daily?lat=38.123&lon=-78.543&start_date=2021-02-14&end_date=2021-02-15
           console.log("Made it in the History API" + daysBetween);
-          weatherAPI = `${weatherHistoryAPIBase}?lat=${geoLat}&lon=${geoLng}&start_date=${tripDate}&end_date=2021-02-23&key=${weatherAPIKey}`;
+          weatherAPI = `${weatherHistoryAPIBase}?lat=${geoLat}&lon=${geoLng}&start_date=${tripDate}&end_date=2021-02-23&units=I&key=${weatherAPIKey}`;
 
         }
 
+        allAPIData.days = daysBetween;
         return getWeatherData(weatherAPI); // run getWeatherData to return fetched data
 
       })
@@ -60,7 +66,9 @@ function handleSubmit(event) {
         console.log("Weather API Data returned: ", weatherData);
         const highTemp = weatherData.data[0].high_temp; // storing high temperature
         const lowTemp = weatherData.data[0].low_temp; // storing low temperature
-        const stateName = weatherData.state_code; // storying state abbrev
+
+        allAPIData.highTemp = weatherData.data[0].high_temp;
+        allAPIData.lowTemp = weatherData.data[0].low_temp;
 
 
         // console.log("High Temp ", highTemp);
@@ -75,20 +83,20 @@ function handleSubmit(event) {
         const webImage = imageData.hits[0].webformatURL; // storing web imageData
         const largeImage = imageData.hits[0].largeImageURL; // storing Large imageData
 
+        allAPIData.webImage = imageData.hits[0].webformatURL;
+
         console.log("Web Image URL: ", webImage);
         console.log("Large Image URL: ", largeImage);
-      //
-      //   postData('/addWeather', {
-      //     web_image: imageData.hits[0].webformatURL,
-      //     large_image: imageData.hits[0].largeImageURL
-      // })
+        console.log(allAPIData);
 
+        postData('/postData',
+          allAPIData
+        )
       })
-
 
       .then(function(newData) {
 
-        updateUI(newData)
+        updateUI()
       })
 
 }
@@ -141,7 +149,6 @@ const getImageData = async (city) => {
 
 function dateCompare(tripDate) {
 
-
   const setTripDate = new Date(tripDate); //Adding Set Date Normal Formatting
 
 // I am having an issue with this if i wrap it in a setDate() comes back with a long string of numbers
@@ -171,8 +178,15 @@ const updateUI = async () => {
   const request = await fetch('/allWeatherData');
   try {
     const allData = await request.json();
-    document.getElementById('city_field').innerHTML = allData.web_image;
-    document.getElementById('city_image').innerHTML = allData.large_image;
+
+    let locationBackground = `"url(${allData.webImage})"`;
+
+    document.getElementById('city_field').innerHTML = allData.highTemp;
+    document.getElementById('city_image').innerHTML = allData.lowTemp;
+    //document.getElementById('location-background').style.backgroundImage="url(images/img.jpg)";
+    document.getElementById('location-background').style.backgroundImage=locationBackground;
+    console.log(locationBackground);
+
 
   } catch (error) {
     console.log("error", error);
