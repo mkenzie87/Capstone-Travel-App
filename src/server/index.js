@@ -41,6 +41,8 @@ function sendWeatherData(req, res) {
 
 
 app.post('/postData',function (req,res){
+  projectData['currentTemp'] = req.body.currentTemp;
+  projectData['weatheDesc'] = req.body.weatheDesc;
   projectData['highTemp'] = req.body.highTemp;
   projectData['lowTemp'] = req.body.lowTemp;
   projectData['webImage'] = req.body.webImage;

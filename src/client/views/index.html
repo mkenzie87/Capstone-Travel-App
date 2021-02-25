@@ -9,9 +9,7 @@
   <link rel="stylesheet" src="/styles/header.css">
   <link rel="stylesheet" src="/styles/form.css">
   <link rel="stylesheet" src="/styles/location.css">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
-</style>
+
 </head>
 
 <body>
@@ -27,17 +25,31 @@
   </section>
 
   <section id="location-background" class="location-wrapper" style="background-image: url('https://images.pexels.com/photos/315998/pexels-photo-315998.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');">
-    <div class="data-wrapper">
+    <div id="data-wrapper">
       <div class="weather-info location-data">
-        <h3>Weather Info</h3>
-        <p>Simple Return Data Here</p>
-        <p>Simple Return Data Here</p>
-      </div>
+        <h3>Currect Weather</h3>
+        <div class="detail-wrapper">
+          <div class="weather-details">
+            <p>Weather Description:</p>
+            <p id="weather-info"></p>
+          </div>
 
-      <div class="weather-info location-data">
-        <h3 id="city_image"></h3>
-        <p>Simple Return Data Here</p>
-        <p>Simple Return Data Here</p>
+          <div class="weather-details">
+            <p>Current Temp:</p>
+            <p><span id="current-temp"></span>&#8457;</p>
+          </div>
+
+          <div class="weather-details">
+            <p>High Temp:</p>
+            <p><span id="high-temp"></span>&#8457;</p>
+          </div>
+
+          <div class="weather-details">
+            <p>Low Temp:</p>
+            <p><span id="low-temp"></span>&#8457;</p>
+          </div>
+        </div>
+
       </div>
 
       <div class="weather-info location-data">

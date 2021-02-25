@@ -64,14 +64,17 @@ function handleSubmit(event) {
 
       .then(function(weatherData) {
         console.log("Weather API Data returned: ", weatherData);
-        const highTemp = weatherData.data[0].high_temp; // storing high temperature
-        const lowTemp = weatherData.data[0].low_temp; // storing low temperature
+        // const highTemp = weatherData.data[0].high_temp; // storing high temperature
+        // const lowTemp = weatherData.data[0].low_temp; // storing low temperature
+        // const weatheDesc = weatherData.data[0].weather.description; // storing low temperature
 
         allAPIData.highTemp = weatherData.data[0].high_temp;
         allAPIData.lowTemp = weatherData.data[0].low_temp;
+        allAPIData.currentTemp = weatherData.data[0].temp;
+        allAPIData.weatheDesc = weatherData.data[0].weather.description;
 
 
-        // console.log("High Temp ", highTemp);
+         //console.log("Current Temp ", currentTemp);
         // console.log("Low Temp ", lowTemp);
         // console.log("State Code ", stateName);
 
@@ -179,18 +182,13 @@ const updateUI = async () => {
   try {
     const allData = await request.json();
 
-    let locationBackground = `'url(${allData.webImage})'`;
-    //let fullBackground = "document.getElementById('location-background').style.backgroundImage=";
-
-
-    document.getElementById('city_field').innerHTML = allData.highTemp;
-    document.getElementById('city_image').innerHTML = allData.lowTemp;
-    //document.getElementById('location-background').style.backgroundImage="url(https://images.pexels.com/photos/1629236/pexels-photo-1629236.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260)";
-    //document.getElementById('location-background').style.backgroundImage='url(https://pixabay.com/get/g4cff499af31a3b8bb6e92d2d193a4cc652e124ff2814935916309e6073752634070a8342cddf202b6d83a8cbe0e4c5e2_640.jpg)'
-    //document.getElementById('location-background').style.backgroundImage=locationBackground;
-    document.getElementById('location-background').style.backgroundImage="url(" + allData.webImage + ")";
-
-    //console.log(fullBackground + locationBackground);
+    let locationBackground = `url(${allData.webImage})`;
+    document.getElementById('data-wrapper').style.cssText = "display: grid; margin: -50px; opacity: 1";
+    document.getElementById('current-temp').innerHTML = allData.currentTemp;
+    document.getElementById('weather-info').innerHTML = allData.weatheDesc;
+    document.getElementById('high-temp').innerHTML = allData.highTemp;
+    document.getElementById('low-temp').innerHTML = allData.lowTemp;
+    document.getElementById('location-background').style.backgroundImage=locationBackground;
 
 
   } catch (error) {
