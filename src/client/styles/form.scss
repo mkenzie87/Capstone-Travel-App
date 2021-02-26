@@ -1,8 +1,8 @@
-// form {
-//     border: 1px solid #545454;
-//     border-radius: 3px;
-//     padding: 40px;
-// }
+.trip-form {
+  input:first-child {
+    margin-bottom: 15px;
+  }
+}
 
 input {
     padding: 5px 20px;
@@ -16,11 +16,13 @@ input {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 0 13% 0 6%;
+    padding: 3.5%;
+    grid-area: form;
 
     h1 {
-      font-size: 60px;
-      margin-bottom: 30px;
+      font-size: 45px;
+      margin-bottom: 20px;
+      transition: all 0.5s ease;
     }
 }
 
@@ -30,4 +32,32 @@ input {
     border: 1px solid;
     color: #fff;
     display: inline-block;
+}
+
+#generate:hover {
+    background: #000;
+}
+
+@media screen and (max-width: 1250px) and (min-width: 1025px) {
+
+  #location-form {
+      padding: 0 10% 0 6%;
+
+      h1 {
+        font-size: 50px;
+        margin-bottom: 20px;
+      }
+  }
+}
+
+@media screen and (min-width: 1251px) {
+
+  #location-form {
+      padding: 0 13% 0 6%;
+
+      h1 {
+        font-size: 60px;
+        margin-bottom: 40px;
+      }
+  }
 }

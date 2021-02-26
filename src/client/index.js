@@ -5,7 +5,6 @@ import './styles/resets.scss'
 import './styles/base.scss'
 import './styles/location.scss'
 import './styles/form.scss'
-import './styles/header.scss'
 
 document.getElementById('generate').addEventListener('click', handleSubmit);
 

@@ -22,8 +22,8 @@ const pixaBayAPIBase = "https://pixabay.com/api/?key="
 function handleSubmit(event) {
     event.preventDefault()
     const getLocation = document.getElementById('location').value;
-    const tripDate = document.getElementById('trip-start').value; // Set Date for Trip
-
+    const tripDate = document.getElementById('trip-start').value; // Start Date for Trip
+    const tripEndDate = document.getElementById('trip-end').value; // End Date for Trip
 
     getLocationData(geoAPIBase, getLocation) // this will trigger the getLocationData function
 
@@ -34,15 +34,17 @@ function handleSubmit(event) {
 
           allAPIData.geoLat = geoData.geonames[0].lat;
           allAPIData.geoLng = geoData.geonames[0].lng;
+          allAPIData.depart = tripDate;
+          allAPIData.endDepart = tripEndDate;
 
-          console.log("Latitude Data ", geoLat);
-          console.log("Long Data ", geoLng);
+          // console.log("Latitude Data ", geoLat);
+          // console.log("Long Data ", geoLng);
 
         // Add data
         console.log(geoData);
 
         // Run dateCompare Function to see Days between
-        const daysBetween = dateCompare(tripDate);
+        const daysBetween = dateCompare(tripDate, tripEndDate);
         console.log("Days between", daysBetween); // log days between number
 
         let weatherAPI = ""; // set weatherAPI to empty string to hold Weather API
@@ -53,7 +55,7 @@ function handleSubmit(event) {
           } else {
           //https:api.weatherbit.io/v2.0/history/daily?lat=38.123&lon=-78.543&start_date=2021-02-14&end_date=2021-02-15
           console.log("Made it in the History API" + daysBetween);
-          weatherAPI = `${weatherHistoryAPIBase}?lat=${geoLat}&lon=${geoLng}&start_date=${tripDate}&end_date=2021-02-23&units=I&key=${weatherAPIKey}`;
+          weatherAPI = `${weatherHistoryAPIBase}?lat=${geoLat}&lon=${geoLng}&start_date=${tripDate}&end_date=${tripEndDate}&units=I&key=${weatherAPIKey}`;
 
         }
 
@@ -72,6 +74,7 @@ function handleSubmit(event) {
         allAPIData.lowTemp = weatherData.data[0].low_temp;
         allAPIData.currentTemp = weatherData.data[0].temp;
         allAPIData.weatheDesc = weatherData.data[0].weather.description;
+        allAPIData.locationName = weatherData.city_name;
 
 
          //console.log("Current Temp ", currentTemp);
@@ -86,7 +89,7 @@ function handleSubmit(event) {
         const webImage = imageData.hits[0].webformatURL; // storing web imageData
         const largeImage = imageData.hits[0].largeImageURL; // storing Large imageData
 
-        allAPIData.webImage = imageData.hits[0].webformatURL;
+        allAPIData.largeImage = imageData.hits[0].largeImageURL;
 
         console.log("Web Image URL: ", webImage);
         console.log("Large Image URL: ", largeImage);
@@ -150,9 +153,10 @@ const getImageData = async (city) => {
 
 
 
-function dateCompare(tripDate) {
+function dateCompare(tripDate, tripEndDate) {
 
   const setTripDate = new Date(tripDate); //Adding Set Date Normal Formatting
+  const setEndTripDate = new Date(tripEndDate); //Adding Set Date Normal Formatting
 
 // I am having an issue with this if i wrap it in a setDate() comes back with a long string of numbers
   // const endDate = setTripDate.getDate() + 1;
@@ -169,7 +173,7 @@ function dateCompare(tripDate) {
   const currentUTC = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
   // Comparing Days
   const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-  const compareDate =  Math.floor((currentUTC - setTripUTC) / _MS_PER_DAY);
+  const compareDate =  Math.abs((currentUTC - setTripUTC) / _MS_PER_DAY);
 
   console.log(compareDate);
   return compareDate;
@@ -182,13 +186,18 @@ const updateUI = async () => {
   try {
     const allData = await request.json();
 
-    let locationBackground = `url(${allData.webImage})`;
-    document.getElementById('data-wrapper').style.cssText = "display: grid; margin: -50px; opacity: 1";
+    let locationBackground = `url(${allData.largeImage})`;
+    document.getElementById('data-wrapper').style.cssText = "display: grid; opacity: 1";
     document.getElementById('current-temp').innerHTML = allData.currentTemp;
     document.getElementById('weather-info').innerHTML = allData.weatheDesc;
     document.getElementById('high-temp').innerHTML = allData.highTemp;
     document.getElementById('low-temp').innerHTML = allData.lowTemp;
+    document.getElementById('departing').innerHTML = allData.depart;
+    document.getElementById('location-name').innerHTML = allData.locationName;
     document.getElementById('location-background').style.backgroundImage=locationBackground;
+    //document.getElementById('location-background').style.minHeight = "600";
+
+    //document.getElementById('location-background').style.cssText = "backgroundImage: url(" + allData.largeImage + "); min-height: 600px";
 
 
   } catch (error) {

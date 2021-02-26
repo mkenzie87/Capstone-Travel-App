@@ -6,7 +6,6 @@
   <title>Test</title>
   <link rel="stylesheet" src="/styles/resets.css">
   <link rel="stylesheet" src="/styles/base.css">
-  <link rel="stylesheet" src="/styles/header.css">
   <link rel="stylesheet" src="/styles/form.css">
   <link rel="stylesheet" src="/styles/location.css">
 
@@ -16,19 +15,30 @@
 
   <section id="location-form" class="form-container">
       <h1>Plan Your <br>Next Vacation!</h1>
-      <form class="" onsubmit="return">
+      <form class="trip-form" onsubmit="return">
+        <label for="start">Destination:</label>
         <input type="text" placeholder="Enter City" id="location" name="location">
+        <label for="start">Departure Start Date:</label>
         <input type="date" id="trip-start" name="trip-start" value="2021-01-01" min="2021-01-01" max="2030-12-31">
+        <label for="start">Departure End Date:</label>
+        <input type="date" id="trip-end" name="trip-end" value="2021-01-01" min="2021-01-01" max="2030-12-31">
         <input type="submit" name="" value="Get Started" id="generate">
       </form>
 
   </section>
 
   <section id="location-background" class="location-wrapper" style="background-image: url('https://images.pexels.com/photos/315998/pexels-photo-315998.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');">
+    <div id="location-name"></div>
     <div id="data-wrapper">
-      <div class="weather-info location-data">
-        <h3>Currect Weather</h3>
+
+      <div class="weather-info location-data" >
+        <h3>Traveling Information</h3>
         <div class="detail-wrapper">
+          <div class="weather-details">
+            <p>Departing on:</p>
+            <p id="departing"></p>
+          </div>
+
           <div class="weather-details">
             <p>Weather Description:</p>
             <p id="weather-info"></p>
@@ -51,14 +61,10 @@
         </div>
 
       </div>
-
-      <div class="weather-info location-data">
-        <h3 id="city_field"></h3>
-        <p>Simple Return Data Here</p>
-        <p>Simple Return Data Here</p>
-      </div>
     </div>
   </section>
+
+
 
   <!-- <script>
       // Check that service workers are supported
