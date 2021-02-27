@@ -31,7 +31,7 @@ function handleSubmit(event) {
           const geoLat = geoData.geonames[0].lat; // storing location latitude
           const geoLng = geoData.geonames[0].lng; // storing location longitute
 
-
+          // add Geo data to server object
           allAPIData.geoLat = geoData.geonames[0].lat;
           allAPIData.geoLng = geoData.geonames[0].lng;
           allAPIData.depart = tripDate;
@@ -45,7 +45,6 @@ function handleSubmit(event) {
 
         // Run dateCompare Function to see Days between
         const daysBetween = dateCompare(tripDate, tripEndDate);
-        console.log("Days between", daysBetween); // log days between number
 
         let weatherAPI = ""; // set weatherAPI to empty string to hold Weather API
         if (daysBetween <= 7) {
@@ -196,9 +195,6 @@ const updateUI = async () => {
     document.getElementById('location-name').innerHTML = allData.locationName;
     document.getElementById('location-background').style.backgroundImage=locationBackground;
     //document.getElementById('location-background').style.minHeight = "600";
-
-    //document.getElementById('location-background').style.cssText = "backgroundImage: url(" + allData.largeImage + "); min-height: 600px";
-
 
   } catch (error) {
     console.log("error", error);
