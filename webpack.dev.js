@@ -1,7 +1,9 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebPackPlugin = require("html-webpack-plugin")
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const {
+  CleanWebpackPlugin
+} = require('clean-webpack-plugin')
 const WorkboxPlugin = require('workbox-webpack-plugin');
 
 
@@ -26,12 +28,17 @@ module.exports = {
         use: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
-           test: /\.(png|jpe?g|gif)$/i,
-           loader: 'file-loader',
-           options: {
-             outputPath: 'images',
-           },
-         },
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'img/',
+            publicPath: 'img/'
+
+          }
+        }],
+      },
     ]
   },
   plugins: [
