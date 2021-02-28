@@ -6,7 +6,8 @@ import './styles/base.scss'
 import './styles/location.scss'
 import './styles/form.scss'
 
-import './img/Beautiful-Beach-View.jpeg'
+import img from './img/Beach.jpg';
+
 document.getElementById('generate').addEventListener('click', handleSubmit);
 
 // alert("I EXIST")
