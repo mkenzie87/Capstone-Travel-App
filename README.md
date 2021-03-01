@@ -1,33 +1,20 @@
-# Project 4 Instructions
+# Travel APp
 
-This project we are using an API from meaningcloud that is a Natural Language Processor.
-
- Full disclosure, this is the Wikipedia definition:
-
-> Natural language processing (NLP) is a subfield of computer science, information engineering, and artificial intelligence
-concerned with the interactions between computers and human (natural) languages, in particular how to program computers to
-process and analyze large amounts of natural language data.
+This project works with not 1 not 2 but you guessed it 3 API's. We using GEONames API to grab coordinates from the users input of where they want to go. Once we get that information will pass that data in to the WeatherBit API. This API will allow us to get information on the current weather or historic weather depending on what day the user is leaving. For our last APi we are pulling an image from PixaBay. This will help bring the project alive by getting an image that relates to the City they picked.  
 
 
-The goal of this project was to give you practice with:
-- Setting up Webpack
-- Sass styles
-- Webpack Loaders and Plugins
-- Creating layouts and page design
-- Service workers
-- Using APIs and creating requests to external urls
+## API Information
+GeoNames - To signup go [here](http://www.geonames.org/export/web-services.html).
+WeatherBit - To signup go [here](https://www.weatherbit.io/account/create).
+PixaBay - To signup go [here](https://pixabay.com/api/docs/).
 
-
-### Signup for an API key
-First, you will need to go [here](https://www.meaningcloud.com/developer/login). Signing up will get you an API key.
-
-###  API Information
-
-We're ready to go! The API has a lot of different endpoints you can take a look at [here](https://www.meaningcloud.com/developer/sentiment-analysis/doc).
-
-## Run project
+## How to Start project
 
 First Terminal
+```
+npm install
+}
+```
 ```
 npm run build-dev
 }
@@ -37,3 +24,6 @@ Second Terminal
 npm run build-prod && npm start
 }
 ```
+
+## Weather App ScreenShot
+![Alt text](src/client/img/Travel-App?raw=true "Travel App")
