@@ -32,13 +32,14 @@ function sendWeatherData(req, res) {
 
 
 
-app.post('/postData',function (req,res){
+app.post('/postData', function(req, res) {
   projectData['currentTemp'] = req.body.currentTemp;
   projectData['weatheDesc'] = req.body.weatheDesc;
   projectData['highTemp'] = req.body.highTemp;
   projectData['lowTemp'] = req.body.lowTemp;
   projectData['largeImage'] = req.body.largeImage;
   projectData['days'] = req.body.days;
+  projectData['imageTotal'] = req.body.imageTotal;
   projectData['locationName'] = req.body.locationName;
   projectData['depart'] = req.body.depart;
   projectData['endDepart'] = req.body.endDepart;

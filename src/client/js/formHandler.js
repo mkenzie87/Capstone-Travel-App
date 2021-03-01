@@ -20,89 +20,80 @@ const pixaBayAPIBase = "https://pixabay.com/api/?key="
 
 
 function handleSubmit(event) {
-    event.preventDefault()
-    const getLocation = document.getElementById('location').value;
-    const tripDate = document.getElementById('trip-start').value; // Start Date for Trip
-    const tripEndDate = document.getElementById('trip-end').value; // End Date for Trip
+  event.preventDefault()
+  const getLocation = document.getElementById('location').value;
+  const tripDate = document.getElementById('trip-start').value; // Start Date for Trip
+  const tripEndDate = document.getElementById('trip-end').value; // End Date for Trip
 
-    getLocationData(geoAPIBase, getLocation) // this will trigger the getLocationData function
+  getLocationData(geoAPIBase, getLocation) // this will trigger the getLocationData function
 
-      .then(function(geoData) {
-          const geoLat = geoData.geonames[0].lat; // storing location latitude
-          const geoLng = geoData.geonames[0].lng; // storing location longitute
+    .then(function(geoData) {
+      const geoLat = geoData.geonames[0].lat; // storing location latitude
+      const geoLng = geoData.geonames[0].lng; // storing location longitute
 
-          // add Geo data to server object
-          allAPIData.geoLat = geoData.geonames[0].lat;
-          allAPIData.geoLng = geoData.geonames[0].lng;
-          allAPIData.depart = tripDate;
-          allAPIData.endDepart = tripEndDate;
+      // add Geo data to server object
+      allAPIData.geoLat = geoData.geonames[0].lat;
+      allAPIData.geoLng = geoData.geonames[0].lng;
+      allAPIData.depart = tripDate;
+      allAPIData.endDepart = tripEndDate;
 
-          // console.log("Latitude Data ", geoLat);
-          // console.log("Long Data ", geoLng);
+      // console.log("Latitude Data ", geoLat);
+      // console.log("Long Data ", geoLng);
 
-        // Add data
-        console.log(geoData);
+      // Add data
+      console.log(geoData);
 
-        // Run dateCompare Function to see Days between
-        const daysBetween = dateCompare(tripDate, tripEndDate);
+      // Run dateCompare Function to see Days between
+      const daysBetween = dateCompare(tripDate);
 
-        let weatherAPI = ""; // set weatherAPI to empty string to hold Weather API
-        if (daysBetween <= 7) {
-          //https://api.weatherbit.io/v2.0/current?lat=35.7796&lon=-78.6382&key=API_KEY&include=minutely
-          console.log("Made it in the Current API", daysBetween);
-          weatherAPI = `${weatherCurrentAPIBase}?lat=${geoLat}&lon=${geoLng}&units=I&key=${weatherAPIKey}`;
-          } else {
-          //https:api.weatherbit.io/v2.0/history/daily?lat=38.123&lon=-78.543&start_date=2021-02-14&end_date=2021-02-15
-          console.log("Made it in the History API" + daysBetween);
-          weatherAPI = `${weatherHistoryAPIBase}?lat=${geoLat}&lon=${geoLng}&start_date=${tripDate}&end_date=${tripEndDate}&units=I&key=${weatherAPIKey}`;
+      let weatherAPI = ""; // set weatherAPI to empty string to hold Weather API
+      if (daysBetween <= 7) {
+        //https://api.weatherbit.io/v2.0/current?lat=35.7796&lon=-78.6382&key=API_KEY&include=minutely
+        console.log("Made it in the Current API", daysBetween);
+        weatherAPI = `${weatherCurrentAPIBase}?lat=${geoLat}&lon=${geoLng}&units=I&key=${weatherAPIKey}`;
+      } else {
+        //https:api.weatherbit.io/v2.0/history/daily?lat=38.123&lon=-78.543&start_date=2021-02-14&end_date=2021-02-15
+        console.log("Made it in the History API" + daysBetween);
+        weatherAPI = `${weatherHistoryAPIBase}?lat=${geoLat}&lon=${geoLng}&start_date=${tripDate}&end_date=${tripEndDate}&units=I&key=${weatherAPIKey}`;
 
-        }
+      }
 
-        allAPIData.days = daysBetween;
-        return getWeatherData(weatherAPI); // run getWeatherData to return fetched data
+      allAPIData.days = daysBetween;
+      return getWeatherData(weatherAPI); // run getWeatherData to return fetched data
 
-      })
+    })
 
-      .then(function(weatherData) {
-        console.log("Weather API Data returned: ", weatherData);
-        // const highTemp = weatherData.data[0].high_temp; // storing high temperature
-        // const lowTemp = weatherData.data[0].low_temp; // storing low temperature
-        // const weatheDesc = weatherData.data[0].weather.description; // storing low temperature
+    .then(function(weatherData) {
+      console.log("Weather API Data returned: ", weatherData);
 
-        allAPIData.highTemp = weatherData.data[0].high_temp;
-        allAPIData.lowTemp = weatherData.data[0].low_temp;
-        allAPIData.currentTemp = weatherData.data[0].temp;
-        allAPIData.weatheDesc = weatherData.data[0].weather.description;
-        allAPIData.locationName = weatherData.city_name;
+      allAPIData.highTemp = weatherData.data[0].high_temp; // holds high temp value
+      allAPIData.lowTemp = weatherData.data[0].low_temp; // holds low temp value
+      allAPIData.currentTemp = weatherData.data[0].temp; // holds current temp value
+      allAPIData.weatheDesc = weatherData.data[0].weather.description; // describes weather value
+      allAPIData.locationName = weatherData.city_name; //
+
+      return getImageData(getLocation);
+
+    })
+
+    .then(function(imageData) {
+      console.log("Pixabay API Data returned: ", imageData);
+
+      allAPIData.largeImage = imageData.hits[0].largeImageURL; // getting image url from fetch
+      allAPIData.imageTotal = imageData.totalHits; //getting image totals from search
 
 
-         //console.log("Current Temp ", currentTemp);
-        // console.log("Low Temp ", lowTemp);
-        // console.log("State Code ", stateName);
+      console.log(allAPIData); // logging out all data
 
-        return getImageData(getLocation);
-      })
+      postData('/postData',
+        allAPIData
+      )
+    })
 
-      .then(function(imageData) {
-        console.log("Pixabay API Data returned: ", imageData);
-        const webImage = imageData.hits[0].webformatURL; // storing web imageData
-        const largeImage = imageData.hits[0].largeImageURL; // storing Large imageData
+    .then(function(newData) {
 
-        allAPIData.largeImage = imageData.hits[0].largeImageURL;
-
-        console.log("Web Image URL: ", webImage);
-        console.log("Large Image URL: ", largeImage);
-        console.log(allAPIData);
-
-        postData('/postData',
-          allAPIData
-        )
-      })
-
-      .then(function(newData) {
-
-        updateUI()
-      })
+      updateUI()
+    })
 
 }
 
@@ -126,13 +117,13 @@ const getWeatherData = async (weatherAPIURL) => {
 
   const res = await fetch(weatherAPIURL)
 
-    try {
-      const data = await res.json();
-      console.log("Return Weather API " + data)
-      return data;
-    } catch (error) {
-      console.log("Weather Data Error", error);
-    }
+  try {
+    const data = await res.json();
+    console.log("Return Weather API " + data)
+    return data;
+  } catch (error) {
+    console.log("Weather Data Error", error);
+  }
 
 
 }
@@ -141,41 +132,32 @@ const getImageData = async (city) => {
   //Example: https://pixabay.com/api/?key=APIKEY&q=yellow+flowers&image_type=photo&pretty=true
   const res = await fetch(pixaBayAPIBase + pixaBayAPI + "&q=" + city + "&image_type=photo&pretty=true")
 
-    try{
-      const data = await res.json();
-      console.log("Return Pixa Bay Data " + data)
-      return data;
-    } catch (error) {
-      console.log("PixaBay Data Error", error);
-    }
+  try {
+    const data = await res.json();
+    console.log("Return Pixa Bay Data " + data)
+    return data;
+  } catch (error) {
+    console.log("PixaBay Data Error", error);
+  }
 }
 
 
 
 function dateCompare(tripDate, tripEndDate) {
 
-  const setTripDate = new Date(tripDate); //Adding Set Date Normal Formatting
-  const setEndTripDate = new Date(tripEndDate); //Adding Set Date Normal Formatting
+  let selectedDate = new Date(tripDate);
 
-// I am having an issue with this if i wrap it in a setDate() comes back with a long string of numbers
-  // const endDate = setTripDate.getDate() + 1;
+  let currentDate = (tripEndDate === undefined) ? new Date() : new Date(tripEndDate);
 
+  // time difference
+  let timeDiff = Math.abs(currentDate.getTime() - selectedDate.getTime());
 
-  // Current Data Variables
-  const date = new Date(); // gets Current Date
-  const day = date.getDate(); // gets current day
-  const month = date.getMonth() + 1; // gets current month need to add 1 because it starts with 0
-  const year = date.getFullYear(); // get current month
+  // days difference
+  let compareDate = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
-  // Discard the time and time-zone information.
-  const setTripUTC = Date.UTC(setTripDate.getFullYear(), setTripDate.getMonth(), setTripDate.getDate());
-  const currentUTC = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
-  // Comparing Days
-  const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-  const compareDate =  Math.abs((currentUTC - setTripUTC) / _MS_PER_DAY);
+  console.log(compareDate); //logging days difference
 
-  console.log(compareDate);
-  return compareDate;
+  return compareDate
 
 }
 
@@ -185,6 +167,8 @@ const updateUI = async () => {
   try {
     const allData = await request.json();
 
+    let tripLength = dateCompare(allData.depart, allData.endDepart);
+
     let locationBackground = `url(${allData.largeImage})`;
     document.getElementById('data-wrapper').style.cssText = "display: grid; opacity: 1";
     document.getElementById('current-temp').innerHTML = allData.currentTemp;
@@ -192,9 +176,11 @@ const updateUI = async () => {
     document.getElementById('high-temp').innerHTML = allData.highTemp;
     document.getElementById('low-temp').innerHTML = allData.lowTemp;
     document.getElementById('departing').innerHTML = allData.depart;
+    document.getElementById('trip-length').innerHTML = tripLength;
     document.getElementById('location-name').innerHTML = allData.locationName;
-    document.getElementById('location-background').style.backgroundImage=locationBackground;
-    //document.getElementById('location-background').style.minHeight = "600";
+    document.getElementById('location-background').style.backgroundImage = locationBackground;
+
+    console.log(tripLength);
 
   } catch (error) {
     console.log("error", error);
@@ -221,5 +207,5 @@ const postData = async (url = '', data = {}) => {
 };
 
 export {
-      handleSubmit
-    }
+  handleSubmit
+}
