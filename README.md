@@ -22,5 +22,8 @@ Second Terminal
 npm run build-prod && npm start
 ```
 
-## Weather App ScreenShot
+## Travel App ScreenShot
 ![Alt text](src/client/img/Travel-App.png "Travel App")
+
+## Travel App Results ScreenShot
+![Alt text](src/client/img/Travel-Results.png "Travel App Results")
