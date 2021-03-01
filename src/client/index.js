@@ -1,15 +1,21 @@
-import { handleSubmit } from './js/formHandler'
-import { validateURL } from './js/checkURL'
+import {
+  handleSubmit
+} from './js/formHandler'
+
 
 import './styles/resets.scss'
 import './styles/base.scss'
-import './styles/footer.scss'
+import './styles/location.scss'
 import './styles/form.scss'
-import './styles/header.scss'
+
+import './img/Beach.jpg';
+
+
+document.getElementById('generate').addEventListener('click', handleSubmit);
 
 // alert("I EXIST")
 console.log("CHANGE!!");
 
 export {
-  handleSubmit,validateURL
+  handleSubmit
 }

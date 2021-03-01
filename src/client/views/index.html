@@ -6,46 +6,71 @@
   <title>Test</title>
   <link rel="stylesheet" src="/styles/resets.css">
   <link rel="stylesheet" src="/styles/base.css">
-  <link rel="stylesheet" src="/styles/header.css">
   <link rel="stylesheet" src="/styles/form.css">
-  <link rel="stylesheet" src="/styles/footer.css">
+  <link rel="stylesheet" src="/styles/location.css">
+
 </head>
 
 <body>
 
-  <header>
-    <div class="">
-      Logo
+  <section id="location-form" class="form-container">
+    <h1>Plan Your <br>Next Vacation!</h1>
+    <form class="trip-form" onsubmit="return">
+      <label for="start">Destination:</label>
+      <input type="text" placeholder="Enter City" id="location" name="location">
+      <label for="start">Departure Start Date:</label>
+      <input type="date" id="trip-start" name="trip-start" value="2021-01-01" min="2021-01-01" max="2030-12-31">
+      <label for="start">Departure End Date:</label>
+      <input type="date" id="trip-end" name="trip-end" value="2021-01-01" min="2021-01-01" max="2030-12-31">
+      <input type="submit" name="" value="Get Started" id="generate">
+    </form>
+
+  </section>
+  <section id="location-background" class="location-wrapper" style="background-image: url('/img/Beach.jpg');">
+    <div id="location-name"></div>
+    <div id="data-wrapper">
+
+      <div class="weather-info location-data">
+        <h3>Traveling Information</h3>
+        <div class="detail-wrapper">
+          <div class="weather-details">
+            <p>Departing on:</p>
+            <p id="departing"></p>
+          </div>
+
+          <div class="weather-details">
+            <p>Trip Length:</p>
+            <p id="trip-length"></p>
+          </div>
+
+          <div class="weather-details">
+            <p>Weather Description:</p>
+            <p id="weather-info"></p>
+          </div>
+
+          <div class="weather-details">
+            <p>Current Temp:</p>
+            <p><span id="current-temp"></span>&#8457;</p>
+          </div>
+
+          <div class="weather-details">
+            <p>High Temp:</p>
+            <p><span id="high-temp"></span>&#8457;</p>
+          </div>
+
+          <div class="weather-details">
+            <p>Low Temp:</p>
+            <p><span id="low-temp"></span>&#8457;</p>
+          </div>
+        </div>
+
+      </div>
     </div>
-    <div class="">
-      navigation
-    </div>
-  </header>
+  </section>
 
-  <main>
-    <section>
-      <form class="" onsubmit="return Client.handleSubmit(event)">
-        <input id="name" type="url" name="url" id="url" pattern="https://.*" placeholder="https://example.com" required>
-        <input type="submit" name="" value="submit" onclick="return Client.handleSubmit(event)" onsubmit="return Client.handleSubmit(event)">
-      </form>
-    </section>
 
-    <section id="entry-wrapper" style="visibility: hidden;">
-      <h2>Form Results:</h2>
-        <p>Irony: <span id="irony"></span></p>
-        <p>Agreement:<span id="agreement"></span></p>
-        <p>Subjectivity: <span id="subjectivity"></span></p>
-        <p>Confidence: <span id="confidence"></span></p>
-        <p>Status: <span id="status"></span></p>
 
-    </section>
-  </main>
-
-  <footer>
-    <p>This is a footer</p>
-  </footer>
-
-  <script>
+   <script>
       // Check that service workers are supported
       if ('serviceWorker' in navigator) {
           // Use the window load event to keep the page load performant
@@ -55,4 +80,5 @@
       }
   </script>
 </body>
+
 </html>
