@@ -1,4 +1,4 @@
-# Travel APp
+# Travel APP
 
 This project works with not 1 not 2 but you guessed it 3 API's. We using GEONames API to grab coordinates from the users input of where they want to go. Once we get that information will pass that data in to the WeatherBit API. This API will allow us to get information on the current weather or historic weather depending on what day the user is leaving. For our last APi we are pulling an image from PixaBay. This will help bring the project alive by getting an image that relates to the City they picked.  
 
@@ -13,17 +13,14 @@ PixaBay - To signup go [here](https://pixabay.com/api/docs/).
 First Terminal
 ```
 npm install
-}
 ```
 ```
 npm run build-dev
-}
 ```
 Second Terminal
 ```
 npm run build-prod && npm start
-}
 ```
 
 ## Weather App ScreenShot
-![Alt text](src/client/img/Travel-App?raw=true "Travel App")
+![Alt text](src/client/img/Travel-App.png "Travel App")
