@@ -29,4 +29,4 @@ npm run build-prod && npm start
 ![Alt text](src/client/img/Travel-Results.png "Travel App Results")
 
 ### Travel App Mobile Results ScreenShot
-![Alt text](src/client/img/Travel-App-Mobile.png "Travel App Mobile Results")
+![Alt text](src/client/img/Travel-Mobile.png "Travel App Mobile Results")
