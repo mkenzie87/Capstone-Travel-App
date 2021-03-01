@@ -14,23 +14,23 @@
 <body>
 
   <section id="location-form" class="form-container">
-      <h1>Plan Your <br>Next Vacation!</h1>
-      <form class="trip-form" onsubmit="return">
-        <label for="start">Destination:</label>
-        <input type="text" placeholder="Enter City" id="location" name="location">
-        <label for="start">Departure Start Date:</label>
-        <input type="date" id="trip-start" name="trip-start" value="2021-01-01" min="2021-01-01" max="2030-12-31">
-        <label for="start">Departure End Date:</label>
-        <input type="date" id="trip-end" name="trip-end" value="2021-01-01" min="2021-01-01" max="2030-12-31">
-        <input type="submit" name="" value="Get Started" id="generate">
-      </form>
+    <h1>Plan Your <br>Next Vacation!</h1>
+    <form class="trip-form" onsubmit="return">
+      <label for="start">Destination:</label>
+      <input type="text" placeholder="Enter City" id="location" name="location">
+      <label for="start">Departure Start Date:</label>
+      <input type="date" id="trip-start" name="trip-start" value="2021-01-01" min="2021-01-01" max="2030-12-31">
+      <label for="start">Departure End Date:</label>
+      <input type="date" id="trip-end" name="trip-end" value="2021-01-01" min="2021-01-01" max="2030-12-31">
+      <input type="submit" name="" value="Get Started" id="generate">
+    </form>
 
   </section>
   <section id="location-background" class="location-wrapper" style="background-image: url('/img/Beach.jpg');">
     <div id="location-name"></div>
     <div id="data-wrapper">
 
-      <div class="weather-info location-data" >
+      <div class="weather-info location-data">
         <h3>Traveling Information</h3>
         <div class="detail-wrapper">
           <div class="weather-details">
@@ -65,7 +65,7 @@
 
 
 
-  <!-- <script>
+   <script>
       // Check that service workers are supported
       if ('serviceWorker' in navigator) {
           // Use the window load event to keep the page load performant
@@ -73,7 +73,7 @@
               navigator.serviceWorker.register('/service-worker.js');
           });
       }
-  </script> -->
+  </script>
 </body>
 
 </html>

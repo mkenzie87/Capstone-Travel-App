@@ -1,6 +1,3 @@
-const dotenv = require('dotenv');
-dotenv.config();
-
 var path = require('path')
 const fetch = require('node-fetch')
 const express = require('express')
@@ -21,14 +18,9 @@ app.use(cors())
 
 app.use(express.static('dist'))
 
-// designates what port the app will listen to for incoming requests
-app.listen(8080, function() {
-  console.log('Travel app listening on port 8080!')
-})
-
 
 app.get('/', function(req, res) {
-  res.sendFile('dist/index.html')
+  res.status(200).res.sendFile('dist/index.html')
 })
 
 // GET Weather Data
@@ -51,7 +43,7 @@ app.post('/postData',function (req,res){
   projectData['depart'] = req.body.depart;
   projectData['endDepart'] = req.body.endDepart;
 
-
-
   res.send(projectData);
 });
+
+module.exports = app;
